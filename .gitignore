@@ -1,0 +1,4 @@
+__pycache__/
+*.pyc
+machine_usage.csv
+.ipynb_checkpoints/
