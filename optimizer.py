@@ -2,7 +2,7 @@ from energy_model import compute_energy
 
 def optimize(tasks):
 
-    # prioritize low energy tasks
+  
     tasks_sorted = sorted(tasks, key=lambda x: x["cpu"])
 
     total_energy = 0
@@ -13,7 +13,7 @@ def optimize(tasks):
         total_waiting += time
 
         energy = compute_energy(t["cpu"], t["execution_time"], time)
-        energy += time * 0.2   # waiting penalty
+        energy += time * 0.2   
 
         total_energy += energy
         time += t["execution_time"]
