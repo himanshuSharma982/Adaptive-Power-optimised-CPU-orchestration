@@ -8,7 +8,6 @@ def run_simulation(tasks, strategy_func):
     total_energy = 0
     total_waiting = 0
 
-    # 🔥 track system heat / load buildup
     system_load = 0
     
 
@@ -17,10 +16,8 @@ def run_simulation(tasks, strategy_func):
         waiting = time
         total_waiting += waiting
 
-        # 🔥 load increases with CPU
         system_load = system_load + t["cpu"]
 
-        # 🔥 energy depends on accumulated load (NOT just task)
         energy = (system_load ** 2) * 0.01 + t["execution_time"] * (1 + t["cpu"]/100)
 
         total_energy += energy
