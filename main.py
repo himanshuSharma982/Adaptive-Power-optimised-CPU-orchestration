@@ -30,10 +30,8 @@ def plot_gantt(timeline, title="Gantt Chart"):
     plt.show()
 
 
-
 N_ROWS = 5000
 TASK_SAMPLE = 100
-
 
 print("\n[INFO] Loading dataset...")
 df = pd.read_csv("machine_usage.csv", nrows=N_ROWS, header=None)
@@ -47,7 +45,9 @@ df = df.dropna().reset_index(drop=True)
 
 print("[INFO] Data loaded:", len(df), "rows")
 
+
 print("\n[INFO] Generating execution time...")
+
 
 df["execution_time"] = (
     df["cpu"] * np.random.uniform(0.05, 0.2, len(df)) +
@@ -85,6 +85,7 @@ print("\n[INFO] Running base optimizer...")
 waiting_base, energy_base = optimize(tasks)
 
 
+
 print("\n[INFO] Running scheduling strategies...")
 
 strategies = {
@@ -93,6 +94,7 @@ strategies = {
 }
 
 results = {}
+
 
 for name, strategy in strategies.items():
 
@@ -145,11 +147,12 @@ def score(res):
 
 best = min(results, key=lambda x: score(results[x]))
 
-print("\n🏆 BEST STRATEGY (SMART SCORE):", best)
+print("\n BEST STRATEGY (SMART SCORE):", best)
 
 print("\n--- SCORE BREAKDOWN ---")
 for name, res in results.items():
     print(name, "-> Score:", round(score(res), 2))
+
 
 save = False
 
@@ -161,10 +164,19 @@ print("\n[INFO] System execution complete.")
 
 
 
+
 methods = list(results.keys())
 
 energy = [results[m]["energy"] for m in methods]
 waiting = [results[m]["waiting"] for m in methods]
+
+efficiency = [results[m]["efficiency"] for m in methods]
+
+plt.figure()
+plt.bar(methods, efficiency)
+plt.title("Efficiency Comparison")
+plt.ylabel("Efficiency")
+plt.show()
 
 
 plt.figure()
@@ -172,6 +184,7 @@ plt.bar(methods, energy)
 plt.title("Energy Comparison")
 plt.ylabel("Energy")
 plt.show()
+
 
 plt.figure()
 plt.bar(methods, waiting)
